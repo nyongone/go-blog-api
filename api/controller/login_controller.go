@@ -2,6 +2,7 @@ package controller
 
 import (
 	"go-blog-api/domain"
+	"time"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -50,6 +51,13 @@ func (c *LoginController) Login(ctx fiber.Ctx) error {
 	}
 
 	err = c.LoginUsecase.UpdateRefreshToken(ctx.Context(), user.ID, refreshToken)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&domain.ErrorResponse{
+			Code: fiber.StatusBadRequest,
+		})
+	}
+
+	err = c.LoginUsecase.UpdateLastSigninAt(ctx.Context(), user.ID, time.Now())
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&domain.ErrorResponse{
 			Code: fiber.StatusBadRequest,

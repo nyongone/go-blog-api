@@ -6,6 +6,7 @@ import (
 	"go-blog-api/ent"
 	"go-blog-api/ent/user"
 	"strings"
+	"time"
 )
 
 type userRepository struct {
@@ -83,6 +84,19 @@ func (r *userRepository) UpdateRefreshToken(ctx context.Context, id int, refresh
 	_, err := r.client.User.
 						UpdateOneID(id).
 						SetRefreshToken(refreshToken).
+						Save(ctx)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *userRepository) UpdateLastSigninAt(ctx context.Context, id int, date time.Time) error {
+	_, err := r.client.User.
+						UpdateOneID(id).
+						SetLastSigninAt(date).
 						Save(ctx)
 
 	if err != nil {

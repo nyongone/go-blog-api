@@ -3,6 +3,7 @@ package domain
 import (
 	"context"
 	"go-blog-api/ent"
+	"time"
 )
 
 type LoginRequest struct {
@@ -20,4 +21,5 @@ type LoginUsecase interface {
 	CreateAccessToken(user *ent.User) (string, error)
 	CreateRefreshToken() (string, error)
 	UpdateRefreshToken(ctx context.Context, id int, refreshToken string) error
+	UpdateLastSigninAt(ctx context.Context, id int, date time.Time) error
 }

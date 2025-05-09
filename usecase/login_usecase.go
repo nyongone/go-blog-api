@@ -5,6 +5,7 @@ import (
 	"go-blog-api/domain"
 	"go-blog-api/ent"
 	"go-blog-api/internal/util"
+	"time"
 )
 
 type loginUsecase struct {
@@ -31,4 +32,8 @@ func (u *loginUsecase) CreateRefreshToken() (string, error) {
 
 func (u *loginUsecase) UpdateRefreshToken(ctx context.Context, id int, refreshToken string) error {
 	return u.userRepository.UpdateRefreshToken(ctx, id, refreshToken)
+}
+
+func (u *loginUsecase) UpdateLastSigninAt(ctx context.Context, id int, date time.Time) error {
+	return u.userRepository.UpdateLastSigninAt(ctx, id, date)
 }
