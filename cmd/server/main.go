@@ -24,6 +24,8 @@ func main() {
 		log.Fatalf("Failed connecting mysql database: %v", err)
 	}
 
+	defer client.Close()
+
 	app.Use(requestid.New())
 	middleware.CORS(app)
 	middleware.Logger(app)
