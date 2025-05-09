@@ -9,5 +9,5 @@ type ErrorResponse struct {
 type SuccessResponse struct {
 	Code		int				`json:"code"`
 	Message	string		`json:"message,omitempty"`
-	Data		any				`json:"data,omitempty"`
+	Result		any				`json:"result,omitempty"`
 }

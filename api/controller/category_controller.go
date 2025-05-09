@@ -31,7 +31,7 @@ func (c *CategoryController) GetCategory(ctx fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
 		Code: fiber.StatusOK,
-		Data: category,
+		Result: category,
 	})
 }
 
@@ -40,7 +40,7 @@ func (c *CategoryController) GetCategoryList(ctx fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
 		Code: fiber.StatusOK,
-		Data: category,
+		Result: category,
 	})
 }
 
