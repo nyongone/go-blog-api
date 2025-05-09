@@ -4,6 +4,7 @@ import (
 	"context"
 	"go-blog-api/api/middleware"
 	"go-blog-api/api/route"
+	"go-blog-api/domain"
 	"go-blog-api/internal/config"
 	"go-blog-api/internal/datastore"
 
@@ -30,11 +31,17 @@ func main() {
 	middleware.CORS(app)
 	middleware.Logger(app)
 
-	api := app.Group("/api")
+	api := app.Group("/api/v1")
 
-	route.NewPostRouter(api.Group("/v1/posts"), context.Background(), client)
-	route.NewCategoryRoute(api.Group("/v1/categories"), context.Background(), client)
-	route.NewLoginRoute(api.Group("/v1/auth"), context.Background(), client)
+	api.Get("/healthCheck", func (ctx fiber.Ctx) error {
+		return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
+			Code: fiber.StatusOK,
+		})
+	})
+
+	route.NewPostRouter(api.Group("/posts"), context.Background(), client)
+	route.NewCategoryRoute(api.Group("/categories"), context.Background(), client)
+	route.NewLoginRoute(api.Group("/auth"), context.Background(), client)
 
 	log.Info(app.Listen(":3000"))
 }
