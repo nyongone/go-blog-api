@@ -31,7 +31,7 @@ func (c *PostController) GetPost(ctx fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
 		Code: fiber.StatusOK,
-		Data: post,
+		Result: post,
 	})
 }
 
@@ -54,28 +54,28 @@ func (c *PostController) GetPostBySlug(ctx fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
 		Code: fiber.StatusOK,
-		Data: post,
+		Result: post,
 	})
 }
 
 func (c *PostController) GetPostList(ctx fiber.Ctx) error {
 	page, err := strconv.Atoi(ctx.Query("page"))
 
-	if err != nil || page < 0 {
-		page = 0
+	if err != nil || page <= 0 {
+		page = 1
 	}
 
 	limit, err := strconv.Atoi(ctx.Query("limit"))
 
-	if err != nil || limit < 0 {
-		limit = 0
+	if err != nil || limit <= 0 {
+		limit = 10
 	}
 
 	posts, _ := c.PostUsecase.GetPostList(ctx.Context(), page, limit)
 
 	return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
 		Code: fiber.StatusOK,
-		Data: posts,
+		Result: posts,
 	})
 }
 
