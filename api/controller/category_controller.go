@@ -36,11 +36,11 @@ func (c *CategoryController) GetCategory(ctx fiber.Ctx) error {
 }
 
 func (c *CategoryController) GetCategoryList(ctx fiber.Ctx) error {
-	posts, _ := c.CategoryUsecase.GetCategoryList(ctx.Context())
+	category, _ := c.CategoryUsecase.GetCategoryList(ctx.Context())
 
 	return ctx.Status(fiber.StatusOK).JSON(&domain.SuccessResponse{
 		Code: fiber.StatusOK,
-		Data: posts,
+		Data: category,
 	})
 }
 
