@@ -1,0 +1,27 @@
+services:
+    server:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: blogapi
+        image: server
+        restart: unless-stopped
+        env_file: .env
+        ports:
+            - "$FIBER_APP_PORT:$FIBER_APP_PORT"
+        depends_on:
+            - mysql
+
+    mysql:
+        container_name: mysql
+        image: mysql:8.0
+        restart: unless-stopped
+        env_file: .env
+        ports:
+            - "$DB_PORT:$DB_PORT"
+        environment:
+            MYSQL_ROOT_PASSWORD: "$DB_PASS"
+            MYSQL_DATABASE: "$DB_SCHEMA"
+            TZ: "Asia/Seoul"
+        volumes:
+            - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
