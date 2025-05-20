@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"go-blog-api/api/middleware"
 	"go-blog-api/api/route"
 	"go-blog-api/domain"
@@ -43,5 +44,5 @@ func main() {
 	route.NewCategoryRoute(api.Group("/categories"), context.Background(), client)
 	route.NewLoginRoute(api.Group("/auth"), context.Background(), client)
 
-	log.Info(app.Listen(":3000"))
+	log.Info(app.Listen(fmt.Sprintf("%s:%s", config.EnvVar.AppHost, config.EnvVar.AppPort)))
 }
